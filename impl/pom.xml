@@ -6,4 +6,12 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <artifactId>gasstation-assessment-impl</artifactId>
+    <dependencies>
+        <dependency>
+            <groupId>net.bigpoint.assessment</groupId> 
+            <artifactId>gasstation-assessment-api</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
 </project>
+

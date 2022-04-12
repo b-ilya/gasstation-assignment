@@ -51,7 +51,6 @@
         <artifactId>impsort-maven-plugin</artifactId>
         <version>1.6.2</version> 
         <configuration>
-          <groups>java.,com.,net.bigpoint.,org.</groups>
           <excludes>
             <exclude>module-info.java</exclude>
           </excludes>

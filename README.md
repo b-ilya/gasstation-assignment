@@ -1,5 +1,4 @@
-# N-iXtest
-Test for N-iX
+# Gas Station assignment
 
 ## Task description
 Hi! 

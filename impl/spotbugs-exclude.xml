@@ -1,0 +1,6 @@
+<FindBugsFilter>
+  <Match>
+    <Class name="net.bigpoint.assessment.gasstation.impl.FastGasStation" />
+    <Bug pattern="VO_VOLATILE_INCREMENT" />
+  </Match>
+</FindBugsFilter>

@@ -9,7 +9,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
-import java.util.stream.Collectors;
 import net.bigpoint.assessment.gasstation.GasPump;
 import net.bigpoint.assessment.gasstation.GasStation;
 import net.bigpoint.assessment.gasstation.GasType;
@@ -41,6 +40,7 @@ public class FastGasStation implements GasStation {
     private volatile int length = 0;
     /** Indicates amount of fuel after all waiting clients is served. */
     private volatile double availableAmount;
+
     /**
      * Initializes the queue.
      */
@@ -133,14 +133,18 @@ public class FastGasStation implements GasStation {
     }
 
     GasPumpQueue selectedQueue = null;
-    synchronized(queues.get(type)) { // grab lock to find suitable pump and reserve fuel.
+    synchronized (queues.get(type)) { // grab lock to find suitable pump and reserve fuel.
       for (GasPumpQueue queue : queues.get(type)) {
-        if (queue.availableAmount > amountInLiters) {
-          if (selectedQueue == null || selectedQueue.length > queue.length
-              || (selectedQueue.length == queue.length
-              && selectedQueue.availableAmount < queue.availableAmount)) {
-            selectedQueue = queue;
-          }
+        // enough gas
+        if (queue.availableAmount > amountInLiters
+            // first suitable pump
+            && selectedQueue == null
+            // less clients in line
+            || selectedQueue.length > queue.length
+            // line is equal but this pump has more fuel
+            || selectedQueue.length == queue.length
+            && selectedQueue.availableAmount < queue.availableAmount) {
+          selectedQueue = queue;
         }
       }
       if (selectedQueue == null) {

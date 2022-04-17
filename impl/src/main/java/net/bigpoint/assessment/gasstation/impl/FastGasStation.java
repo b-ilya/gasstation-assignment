@@ -162,13 +162,15 @@ public class FastGasStation implements GasStation {
       try {
         pump = selectedQueue.pump.take();
       } catch (InterruptedException ignored) {
+        // ignore and retry
       }
     }
     pump.pumpGas(amountInLiters);
     synchronized (queues.get(type)) { // grab lock to exit line after pumping
       selectedQueue.length--;
     }
-    selectedQueue.pump.add(pump);
+    selectedQueue.pump.add(pump); // return pump for the next pump in line
+
     double cost = price.get(type) * amountInLiters;
     synchronized (statsLock) { // grab lock to checkout
       salesCount++;

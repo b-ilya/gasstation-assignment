@@ -47,9 +47,31 @@ public class TestFastGasStation {
     }
 
     @Test
-    @DisplayName("Empty pump collection is returned")
+    @DisplayName("empty pump collection is returned")
     public void testPumpsIsEmpty() {
       assertTrue(station.getGasPumps().isEmpty());
+    }
+
+    @Test
+    @DisplayName("pumps added")
+    public void testAddPumps() {
+      var regularPump1 = new GasPump(GasType.REGULAR, 10.0);
+      var regularPump2 = new GasPump(GasType.REGULAR, 15.0);
+      var superPump = new GasPump(GasType.SUPER, 20.0);
+
+      station.addGasPump(regularPump1);
+      assertEquals(1, station.getGasPumps().length());
+      assertTrue(station.getGasPumps().contains(regularPump1));
+
+      station.addGasPump(regularPump2);
+      assertEquals(2, station.getGasPumps().length());
+      assertTrue(station.getGasPumps().contains(regularPump2));
+
+      station.addGasPump(superPump);
+      assertEquals(3, station.getGasPumps().length());
+      assertTrue(station.getGasPumps().contains(superPump));
+      assertTrue(station.getGasPumps().contains(regularPump1));
+      assertTrue(station.getGasPumps().contains(regularPump2));
     }
 
     @Test
@@ -59,7 +81,7 @@ public class TestFastGasStation {
     }
 
     @Test
-    @DisplayName("Modifications to getGasPumps result ignored")
+    @DisplayName("modifications to getGasPumps result ignored")
     public void testPumpsIncapsulation() {
       var pumpsCopy = station.getGasPumps();
       pumpsCopy.add(new GasPump(GasType.DIESEL, 100.0));
@@ -82,5 +104,55 @@ public class TestFastGasStation {
       assertThrows(IllegalArgumentException.class,
           () -> station.buyGas(GasType.DIESEL, 1.0, -1.0));
     }
+
+    @Test
+    @DisplayName("getPrice fails if not set")
+    public void testGetPriceFails() {
+      assertThrows(IllegalStateException.class,
+          () -> station.getPrice(GasType.DIESEL));
+    }
+
+    @Test
+    @DisplayName("set price")
+    public void test() throws Exceptions {
+      station.setPrice(GasType.DIESEL, 10.0);
+      assertEquals(10.0, station.getPrice(GasType.DIESEL));
+      station.setPrice(GasType.DIESEL, 5.0);
+      assertEquals(5.0, station.getPrice(GasType.DIESEL));
+    }
+
+    @Test
+    @DisplayName("set price fails")
+    public void test() throws Exceptions {
+      assertThrows(IllegalArgumentException.class,
+          () -> station.setPrice(null, 10.0));
+      assertThrows(IllegalArgumentException.class,
+          () -> station.setPrice(GasType.DIESEL, 0.0));
+      assertThrows(IllegalArgumentException.class,
+          () -> station.setPrice(GasType.DIESEL, -1.0));
+    }
+
+    // Different number of pumps by type: DIESEL: 0, SUPER: 1, REGULAR: 2
+    @Nested
+    @DisplayName("When pumps added")
+    public class PumpsSet {
+
+      @BeforeEach
+      public void setPumps() {
+        var regularPump1 = new GasPump(GasType.REGULAR, 10.0);
+        var regularPump2 = new GasPump(GasType.REGULAR, 15.0);
+        var superPump = new GasPump(GasType.SUPER, 20.0);
+        station.addGasPump(regularPump1);
+        station.addGasPump(regularPump2);
+        station.addGasPump(superPump);
+      }
+
+      //@Test
+      //@DisplayName("")
+      //public void test() throws Exceptions {
+      //  
+      //}
+    }
   }
 }
+

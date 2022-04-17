@@ -60,15 +60,15 @@ public class TestFastGasStation {
       var superPump = new GasPump(GasType.SUPER, 20.0);
 
       station.addGasPump(regularPump1);
-      assertEquals(1, station.getGasPumps().length());
+      assertEquals(1, station.getGasPumps().size());
       assertTrue(station.getGasPumps().contains(regularPump1));
 
       station.addGasPump(regularPump2);
-      assertEquals(2, station.getGasPumps().length());
+      assertEquals(2, station.getGasPumps().size());
       assertTrue(station.getGasPumps().contains(regularPump2));
 
       station.addGasPump(superPump);
-      assertEquals(3, station.getGasPumps().length());
+      assertEquals(3, station.getGasPumps().size());
       assertTrue(station.getGasPumps().contains(superPump));
       assertTrue(station.getGasPumps().contains(regularPump1));
       assertTrue(station.getGasPumps().contains(regularPump2));

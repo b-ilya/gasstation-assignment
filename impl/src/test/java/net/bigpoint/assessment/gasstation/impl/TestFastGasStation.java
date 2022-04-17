@@ -114,7 +114,7 @@ public class TestFastGasStation {
 
     @Test
     @DisplayName("set price")
-    public void test() throws Exceptions {
+    public void testSetPrice() {
       station.setPrice(GasType.DIESEL, 10.0);
       assertEquals(10.0, station.getPrice(GasType.DIESEL));
       station.setPrice(GasType.DIESEL, 5.0);
@@ -123,7 +123,7 @@ public class TestFastGasStation {
 
     @Test
     @DisplayName("set price fails")
-    public void test() throws Exceptions {
+    public void testSetPriceFails() {
       assertThrows(IllegalArgumentException.class,
           () -> station.setPrice(null, 10.0));
       assertThrows(IllegalArgumentException.class,
@@ -149,7 +149,7 @@ public class TestFastGasStation {
 
       //@Test
       //@DisplayName("")
-      //public void test() throws Exceptions {
+      //public void test() throws Exception {
       //  
       //}
     }

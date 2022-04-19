@@ -138,12 +138,12 @@ public class FastGasStation implements GasStation {
         // enough gas
         if (queue.availableAmount > amountInLiters
             // first suitable pump
-            && selectedQueue == null
+            && (selectedQueue == null
             // less clients in line
             || selectedQueue.length > queue.length
             // line is equal but this pump has more fuel
             || selectedQueue.length == queue.length
-            && selectedQueue.availableAmount < queue.availableAmount) {
+            && selectedQueue.availableAmount < queue.availableAmount)) {
           selectedQueue = queue;
         }
       }
